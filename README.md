@@ -1,6 +1,6 @@
-Oxmol is a Python wrapper, written using ![pyo3](https://github.com/PyO3/pyo3) for the ![minimal molecule](https://github.com/rapodaca/molecule.rs) implemented in Rust by Rich Apodaca.
+`oxmol` is a Python wrapper, written using ![pyo3](https://github.com/PyO3/pyo3), for the ![minimal molecule](https://github.com/rapodaca/molecule.rs) implemented in Rust by Rich Apodaca.
 
-This package is currently incomplete and requires nightly Rust to build (due to the pyo3 dependency). DefaultMolecules can be instantiated, but no functionality is implemented yet.
+This package is currently incomplete and requires nightly Rust to build (due to the pyo3 dependency). `DefaultMolecules` can be instantiated, and all functions _work_, but are likely to be quite inefficient. Functions which return iterators in Rust currently return Python lists rather than generators.
 
 ## Example Usage
 
