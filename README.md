@@ -31,6 +31,22 @@ bonds.append(spec.BondSpec(0, 4, single_bond))
 bonds.append(spec.BondSpec(0, 5, single_bond))
 
 mol = molecule.DefaultMolecule(atoms, bonds)
+
+for (sid, tid) in mol.edges():
+    print(mol.element(sid), mol.element(tid))
+    print(mol.bond_order(sid, tid))
+
+# Element::C Element::O
+# BondOrder::Single
+# Element::O Element::H
+# BondOrder::Single
+# Element::C Element::H
+# BondOrder::Single
+# Element::C Element::H
+# BondOrder::Single
+# Element::C Element::H
+# BondOrder::Single
+
 print(mol)
 # Something like <DefaultMolecule object at 0x7f9f8f115390>
 ```

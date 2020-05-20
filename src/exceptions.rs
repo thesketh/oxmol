@@ -1,6 +1,7 @@
 use pyo3::exceptions;
 use pyo3::PyErr;
 use molecule::error::Error;
+use gamma::graph::Error as GraphError;
 
 #[allow(non_snake_case)]
 pub fn get_ValueError(error_message: &'static str) -> PyErr {
@@ -21,4 +22,9 @@ pub fn exception_from_error(error: Error) -> PyErr {
     };
 
     get_ValueError(error_message)
+}
+
+pub fn exception_from_graph_error(error: GraphError) -> PyErr {
+    let error_message = format!("Graph issue: {:?}", error);
+    exceptions::ValueError::py_err(error_message)
 }

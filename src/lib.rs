@@ -41,7 +41,7 @@ pub fn molecule(_py: Python, m: &PyModule) -> PyResult<()> {
 
 
 #[pymodule]
-fn oxmol(_py: Python, m: &PyModule) -> PyResult<()> {
+fn liboxmol(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pymodule!(element))?;
     m.add_wrapped(wrap_pymodule!(bond_order))?;
     m.add_wrapped(wrap_pymodule!(parity))?;
