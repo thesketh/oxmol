@@ -9,17 +9,22 @@ use crate::bond_order::PyBondOrder;
 use crate::parity::PyParity;
 
 
-#[pyclass(name=AtomSpec)]
+#[pyclass(subclass)]
 #[derive(Copy,Clone,Debug)]
-pub struct PyAtom {
+pub struct PyAtomSpec {
+    #[pyo3(get)]
     pub element: PyElement,
+    #[pyo3(get)]
     pub hydrogens: u8,
+    #[pyo3(get)]
     pub ion: i8,
+    #[pyo3(get)]
     pub isotope: Option<u16>,
+    #[pyo3(get)]
     pub parity: Option<PyParity>
 }
 
-impl Into<Atom> for PyAtom {
+impl Into<Atom> for PyAtomSpec {
     fn into(self) -> Atom {
         Atom {
             element: self.element.element,
@@ -34,7 +39,7 @@ impl Into<Atom> for PyAtom {
     }
 }
 
-impl From<Atom> for PyAtom {
+impl From<Atom> for PyAtomSpec {
     fn from(atom: Atom) -> Self {
         Self {
             element: PyElement::from(atom.element),
@@ -50,42 +55,15 @@ impl From<Atom> for PyAtom {
 }
 
 #[pymethods]
-impl PyAtom {
+impl PyAtomSpec {
     #[new]
-    fn new(element: PyElement, hydrogens: u8, ion: Option<i8>, isotope: Option<u16>, parity: Option<PyParity>) -> Self {
-        let ion = match ion {
-            Some(value) => value,
-            None => 0,
-        };
+    fn new(element: PyElement, hydrogens: u8, ion: i8, isotope: Option<u16>, parity: Option<PyParity>) -> Self {
         Self {element, hydrogens, ion, isotope, parity}
-    }
-
-    #[getter]
-    fn element(&self) -> PyResult<PyElement> {
-        Ok(self.element)
-    }
-
-    #[getter]
-    fn hydrogens(&self) -> PyResult<u8> {
-        Ok(self.hydrogens)
-    }
-
-    #[getter]
-    fn ion(&self) -> PyResult<i8> {
-        Ok(self.ion)
-    }
-
-    fn isotope(&self) -> PyResult<Option<u16>> {
-        Ok(self.isotope)
-    }
-
-    fn parity(&self) -> PyResult<Option<PyParity>> {
-        Ok(self.parity)
     }
 }
 
 #[pyproto]
-impl PyObjectProtocol for PyAtom {
+impl PyObjectProtocol for PyAtomSpec {
     fn __repr__(&self) -> PyResult<String> {
         let parity = match self.parity {
             Some(parity) => format!("{:?}", parity.parity),
@@ -98,23 +76,27 @@ impl PyObjectProtocol for PyAtom {
         };
 
         Ok(format!(
-            "Atom {{ {:?}, {} hydrogens, Charge: {}, Isotope: {}, Parity: {} }}", 
+            "PyAtomSpec {{ {:?}, {} hydrogens, Charge: {}, Isotope: {}, Parity: {} }}", 
             self.element.element, self.hydrogens, self.ion, isotope, parity
         ))
     }
 }
 
 
-#[pyclass(name=BondSpec)]
+#[pyclass(subclass)]
 #[derive(Copy,Clone,Debug)]
-pub struct PyBond {
+pub struct PyBondSpec {
+    #[pyo3(get)]
     pub sid: usize,
+    #[pyo3(get)]
     pub tid: usize,
+    #[pyo3(get)]
     pub order: PyBondOrder,
+    #[pyo3(get)]
     pub parity: Option<PyParity>
 }
 
-impl From<Bond> for PyBond {
+impl From<Bond> for PyBondSpec {
     fn from(bond: Bond) -> Self {
         Self {
             sid: bond.sid,
@@ -128,7 +110,7 @@ impl From<Bond> for PyBond {
     }
 }
 
-impl Into<Bond> for PyBond {
+impl Into<Bond> for PyBondSpec {
     fn into(self) -> Bond {
         Bond {
             sid: self.sid,
@@ -143,19 +125,19 @@ impl Into<Bond> for PyBond {
 }
 
 #[pymethods]
-impl PyBond {
+impl PyBondSpec {
     #[new]
     fn new(sid: usize, tid: usize, order: PyBondOrder, parity: Option<PyParity>) -> PyResult<Self> {
         if sid == tid {
             return Err(get_ValueError("Can't bond atom to itself"));
         }
 
-        Ok(PyBond{sid, tid, order, parity})
+        Ok(PyBondSpec{sid, tid, order, parity})
     }
 }
 
 #[pyproto]
-impl PyObjectProtocol for PyBond {
+impl PyObjectProtocol for PyBondSpec {
     fn __repr__(&self) -> PyResult<String> {
         let parity = match self.parity {
             Some(parity) => format!("{:?}", parity.parity),
@@ -163,7 +145,7 @@ impl PyObjectProtocol for PyBond {
         };
 
         Ok(format!(
-            "Bond {{ Start: {}, End: {}, {:?}, Parity: {} }}", 
+            "PyBondSpec {{ Start: {}, End: {}, {:?}, Parity: {} }}", 
             self.sid, self.tid, self.order.bond_order, parity
         ))
     }

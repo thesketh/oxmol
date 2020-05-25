@@ -7,7 +7,7 @@ use pyo3::class::{PyObjectProtocol, basic::CompareOp};
 use pyo3::types::PyType;
 use pyo3::prelude::*;
 
-#[pyclass(name=Element)]
+#[pyclass(subclass)]
 #[derive(Copy,Clone,Debug)]
 pub struct PyElement {
     pub element: Element,
@@ -285,7 +285,7 @@ impl PyElement {
             "Lv" => Element::Lv,
             "Ts" => Element::Ts,
             "Og" => Element::Og,            
-            _    => return Err(get_ValueError("Not an element"))
+            _    => return Err(get_ValueError("Not an element symbol."))
         };
 
         Ok(Self{ element })
@@ -304,7 +304,7 @@ impl PyElement {
 #[pyproto]
 impl PyObjectProtocol for PyElement {
     fn __repr__(&self) -> PyResult<String> {
-        Ok(format!("Element::{:?}", self.element))
+        Ok(format!("PyElement::{:?}", self.element))
     }
 
     fn __hash__(&self) -> PyResult<isize> {

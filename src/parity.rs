@@ -4,7 +4,7 @@ use molecule::parity::Parity;
 use pyo3::class::{PyObjectProtocol, basic::CompareOp};
 use pyo3::prelude::*;
 
-#[pyclass(name=Parity)]
+#[pyclass(subclass)]
 #[derive(Copy,Clone,Debug)]
 pub struct PyParity {
     pub parity: Parity,

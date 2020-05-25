@@ -7,7 +7,7 @@ use molecule::bond_order::BondOrder;
 
 use crate::exceptions::{get_ValueError, get_NotImplementedError};
 
-#[pyclass(name=BondOrder)]
+#[pyclass(subclass)]
 #[derive(Copy,Clone,Debug)]
 pub struct PyBondOrder {
     pub bond_order: BondOrder,
@@ -64,7 +64,7 @@ impl PyBondOrder {
 #[pyproto]
 impl PyObjectProtocol for PyBondOrder {
     fn __repr__(&self) -> PyResult<String> {
-        Ok(format!("BondOrder::{:?}", self.bond_order))
+        Ok(format!("PyBondOrder::{:?}", self.bond_order))
     }
 
     fn __bool__(&self) -> PyResult<bool> {

@@ -4,8 +4,6 @@ version = "0.1.0"
 authors = ["Travis Hesketh <travis@hesketh.scot>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [lib]
 name = "oxmol"
 crate-type = ["cdylib"]
@@ -14,6 +12,6 @@ crate-type = ["cdylib"]
 molecule = {git = "https://github.com/rapodaca/molecule.rs"}
 gamma = "0.1.1"
 
-[dependencies.pyo3]
-version = "0.10.1"
-features = ["extension-module"]
+    [dependencies.pyo3]
+    version = "0.10.1"
+    features = ["extension-module"]

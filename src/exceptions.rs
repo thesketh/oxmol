@@ -24,6 +24,11 @@ pub fn exception_from_error(error: Error) -> PyErr {
     get_ValueError(error_message)
 }
 
+pub fn generic_exception<T: std::fmt::Debug>(error: T) -> PyErr {
+    let error_message = format!("{:?}", error);
+    exceptions::Exception::py_err(error_message)
+}
+
 pub fn exception_from_graph_error(error: GraphError) -> PyErr {
     let error_message = format!("Graph issue: {:?}", error);
     exceptions::ValueError::py_err(error_message)

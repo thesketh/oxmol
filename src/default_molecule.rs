@@ -1,26 +1,31 @@
 // use pyo3::class::PyObjectProtocol;
 use std::convert::TryFrom;
 use pyo3::prelude::*;
+use pyo3::class::PyObjectProtocol;
 
 use molecule::default_molecule::DefaultMolecule;
 use molecule::molecule::Molecule;
 
 use gamma::graph::Graph;
 use crate::exceptions::*;
-use crate::spec::{PyAtom,PyBond};
+use crate::spec::{PyAtomSpec,PyBondSpec};
 use crate::element::PyElement;
 use crate::parity::PyParity;
 use crate::bond_order::PyBondOrder;
 
-#[pyclass(name=DefaultMolecule)]
+#[pyclass(subclass)]
 pub struct PyDefaultMolecule {
     default_molecule: DefaultMolecule,
+    #[pyo3(get)]
+    nodes: Vec<usize>,
+    #[pyo3(get)]
+    edges: Vec<(usize, usize)>,
 }
 
 #[pymethods]
 impl PyDefaultMolecule {
     #[new]
-    fn new(py_atoms: Vec<PyAtom>, py_bonds: Vec<PyBond>) -> PyResult<Self> {
+    fn new(py_atoms: Vec<PyAtomSpec>, py_bonds: Vec<PyBondSpec>) -> PyResult<Self> {
         let mut atoms = Vec::new();
         let mut bonds = Vec::new();
 
@@ -34,70 +39,38 @@ impl PyDefaultMolecule {
             bonds.push(bond);
         }
 
+        let nodes = (0..atoms.len()).collect();
+
         let molecule = molecule::spec::Molecule{atoms, bonds};
         let default_molecule = match DefaultMolecule::build(molecule) {
             Ok(molecule) => molecule,
             Err(error_type) => return Err(exception_from_error(error_type))
         };
-        Ok(PyDefaultMolecule{default_molecule})
+
+        let mut edges = Vec::new();
+        for (sid, tid) in default_molecule.edges() {
+            let edge = (*sid, *tid);
+            edges.push(edge);
+        }
+        Ok(PyDefaultMolecule{ default_molecule, edges, nodes })
     }
 
     fn is_empty(&self) -> PyResult<bool> {
-        Ok(self.default_molecule.is_empty())
+        Ok(self.nodes.is_empty())
     }
 
     fn order(&self) -> PyResult<usize> {
-        Ok(self.default_molecule.order())
+        Ok(self.nodes.len())
     }
 
     fn size(&self) -> PyResult<usize> {
-        Ok(self.default_molecule.size())
-    }
-
-    fn nodes(&self) -> PyResult<Vec<usize>> {
-        let mut nodes = Vec::new();
-
-        for item in self.default_molecule.nodes() {
-            nodes.push(*item);
-        };
-
-        Ok(nodes)
-    }
-
-    fn edges(&self) -> PyResult<Vec<(usize, usize)>> {
-        let mut edges = Vec::new();
-
-        for (sid, tid) in self.default_molecule.edges() {
-            edges.push((*sid, *tid));
-        };
-
-        Ok(edges)
+        Ok(self.edges.len())
     }
 
     fn has_node(&self, id: usize) -> PyResult<bool> {
-        Ok(self.default_molecule.has_node(&id))
-    }
-
-    fn neighbors(&self, id: usize) -> PyResult<Vec<usize>> {
-        let mut neighbors = Vec::new();
-
-        let neighbour_iter = match self.default_molecule.neighbors(&id) {
-            Ok(iterator) => iterator,
-            Err(graph_error) => return Err(exception_from_graph_error(graph_error))
-        };
-
-        for neighbor_id in neighbour_iter {
-            neighbors.push(*neighbor_id);
-        }
-
-        Ok(neighbors)
-    }
-
-
-    fn degree(&self, id: usize) -> PyResult<usize> {
-        match self.default_molecule.degree(&id) {
-            Ok(degree) => Ok(degree),
-            Err(graph_error) => Err(exception_from_graph_error(graph_error))
+        match self.nodes.get(id) {
+            Some(_) => Ok(true),
+            None => Ok(false),
         }
     }
 
@@ -108,6 +81,29 @@ impl PyDefaultMolecule {
         }
     }
 
+    fn neighbors(&self, id: usize) -> PyResult<Vec<usize>> {
+        let mut neighbors = Vec::with_capacity(6);
+
+        match self.default_molecule.neighbors(&id) {
+            Ok(iterator) => {
+                for neighbor_id in iterator {
+                    neighbors.push(*neighbor_id);
+                }
+                Ok(neighbors)
+            },
+            Err(graph_error) => {
+                let error = exception_from_graph_error(graph_error);
+                Err(error)
+            }
+        }
+    }
+
+    fn degree(&self, id: usize) -> PyResult<usize> {
+        match self.default_molecule.degree(&id) {
+            Ok(degree) => Ok(degree),
+            Err(graph_error) => Err(generic_exception(graph_error))
+        }
+    }
 
     fn element(&self, id: usize) -> PyResult<PyElement> {
         match self.default_molecule.element(&id) {
@@ -178,5 +174,19 @@ impl PyDefaultMolecule {
             }
             Err(graph_error) => Err(exception_from_graph_error(graph_error))
         }
+    }
+}
+
+#[pyproto]
+impl PyObjectProtocol for PyDefaultMolecule {
+    fn __repr__(&self) -> PyResult<String> {
+        let n_atoms = self.nodes.len();
+        let n_bonds = self.edges.len();
+
+        Ok(format!(
+            "PyDefaultMolecule with {} atoms, {} bonds.", 
+            n_atoms, 
+            n_bonds
+        ))
     }
 }
