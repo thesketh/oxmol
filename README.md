@@ -2,11 +2,11 @@
 
 [![Documentation Status](https://readthedocs.org/projects/oxmol/badge/?version=latest)](https://oxmol.readthedocs.io/en/latest/?badge=latest)
 
-`oxmol` is a Python wrapper, written using ![PyO3](https://github.com/PyO3/pyo3), for the ![minimal molecule](https://github.com/rapodaca/molecule.rs) implemented in Rust by Rich Apodaca. This follows the 'minimal molecule API' ![outlined by Apodaca in a blog post](https://depth-first.com/articles/2020/04/06/a-minimal-molecule-api/). Due to the PyO3 dependency, nightly Rust is required.
+`oxmol` is a Python wrapper, written using [PyO3](https://github.com/PyO3/pyo3), for the [minimal molecule](https://github.com/rapodaca/molecule.rs) implemented in Rust by Rich Apodaca. This follows the 'minimal molecule API' [outlined by Apodaca in a blog post](https://depth-first.com/articles/2020/04/06/a-minimal-molecule-api/). Due to the PyO3 dependency, nightly Rust is required.
 
 This package is currently a work in progress, it is missing some of the following key pieces:
 
-- A SMILES parser/writer (![this is being worked on](https://depth-first.com/articles/2020/05/25/lets-build-a-smiles-parser-in-rust/))
+- A SMILES parser/writer ([this is being worked on](https://depth-first.com/articles/2020/05/25/lets-build-a-smiles-parser-in-rust/))
 - Substructure matching
 - Coordinate representations and embedding
 - Descriptor generation
@@ -15,7 +15,7 @@ These will be expanded upon in future versions.
 
 ## Building
 
-![The installation instructions can be found in the docs](https://oxmol.readthedocs.io/en/latest/installation.html)
+[The installation instructions can be found in the docs](https://oxmol.readthedocs.io/en/latest/installation.html)
 
 ## Example Usage
 
