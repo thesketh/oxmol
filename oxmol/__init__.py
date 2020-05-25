@@ -30,10 +30,13 @@ __ https://depth-first.com/articles/2020/05/25/lets-build-a-smiles-parser-in-rus
 # submodules in Sphinx...
 import os
 d, f = os.path.split(__file__)
-# The fake Python submodule we make for building docs.
+# The real Rust lib, usually packaged using maturin.
+so_file = os.path.join(d, 'oxmol.so')
+# The fake Python submodule we make to build the docs.
 fake_py = os.path.join(d, 'oxmol.py')
-if os.path.exists(fake_py):
+if os.path.exists(so_file) and os.path.exists(fake_py):
     os.remove(fake_py)
+###
 
 __version__ = "0.1.0"
 
