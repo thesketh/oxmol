@@ -26,6 +26,15 @@ __ https://depth-first.com/articles/2020/05/11/cheminformatics-in-rust-implement
 __ https://depth-first.com/articles/2020/05/25/lets-build-a-smiles-parser-in-rust/
 
 """
+# All this because mocking it's not possible to mock
+# submodules in Sphinx...
+import os
+d, f = os.path.split(__file__)
+# The fake Python submodule we make for building docs.
+fake_py = os.path.join(d, 'oxmol.py')
+if os.path.exists(fake_py):
+    os.remove(fake_py)
+
 __version__ = "0.1.0"
 
 from oxmol.element import Element
