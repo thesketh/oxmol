@@ -14,16 +14,8 @@ import os
 import sys
 import shutil
 import sphinx_rtd_theme
-
-so_path = '../oxmol/oxmol.so'
-fake_oxmol = 'fake_oxmol.py'
-oxmol_py = '../oxmol/oxmol.py'
-if not os.path.exists(so_path):
-    shutil.copy(fake_oxmol, oxmol_py)
-
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../'))
-
 
 # -- Project information -----------------------------------------------------
 
@@ -35,6 +27,16 @@ author = 'Travis Hesketh'
 release = '0.1.0'
 
 # -- General configuration ---------------------------------------------------
+
+# Faking the Rust library.
+so_path = '../oxmol/oxmol.so'
+fake_oxmol = 'fake_oxmol.py'
+oxmol_py = '../oxmol/oxmol.py'
+if not os.path.exists(so_path):
+    shutil.copy(fake_oxmol, oxmol_py)
+
+# Apparently this is normally set to 'contents.rst'
+master_doc = 'index'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
