@@ -15,13 +15,7 @@ These will be expanded upon in future versions.
 
 ## Building
 
-1. Ensure that the Rust toolchain is installed
-2. Set the nightly compiler as the default (`rustup default nightly`)
-3. Ensure that ![Maturin](https://github.com/PyO3/maturin) is intalled (`pip install maturin`)
-4. Clone the repo and `cd` into the root.
-5. Build the Python wheels (`maturin build --release`)
-6. `cd` into `target/wheels`
-7. Install the relevant wheel using `pip`. 
+![The installation instructions can be found in the docs](https://oxmol.readthedocs.io/en/latest/installation.html)
 
 ## Example Usage
 
