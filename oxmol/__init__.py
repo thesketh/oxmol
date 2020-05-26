@@ -26,17 +26,18 @@ __ https://depth-first.com/articles/2020/05/11/cheminformatics-in-rust-implement
 __ https://depth-first.com/articles/2020/05/25/lets-build-a-smiles-parser-in-rust/
 
 """
-# All this because mocking it's not possible to mock
-# submodules in Sphinx...
-import os
-d, f = os.path.split(__file__)
-# The real Rust lib, usually packaged using maturin.
-so_file = os.path.join(d, 'oxmol.so')
+# All this because it's not possible to mock subpackages in Sphinx...
+import os as _os
+_d, _ = _os.path.split(__file__)
 # The fake Python submodule we make to build the docs.
-fake_py = os.path.join(d, 'oxmol.py')
-if os.path.exists(so_file) and os.path.exists(fake_py):
-    os.remove(fake_py)
-###
+_fake_py = _os.path.join(_d, 'oxmol.py')
+if _os.path.exists(_fake_py):
+    for _f in _os.listdir(_d):
+        # If the real oxmol lib is there, remove the fake one
+        _filename, _ext = _os.path.splitext(_f)
+        if _filename.startswith('oxmol') and _ext == "so":
+            _os.remove(_fake_py)
+#####
 
 __version__ = "0.1.0"
 
