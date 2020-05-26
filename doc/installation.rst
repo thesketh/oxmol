@@ -57,18 +57,66 @@ Clone the repo using git and move into the root folder:
     git clone https://github.com/thesketh/oxmol
     cd oxmol
 
-Execute the following commands from the root of the repo, where
-RELEVANT_VERSION is closest to your Python version:
+Execute the following command from the root of the repo.
 
 .. code-block:: bash
     
     maturin build --release
-    cd target/wheels
-    pip install RELEVANT_VERSION
+
+Maturin will compile the Rust component of the library and create a Python
+wheel containing the Rust and Python components, which are placed in 
+``./target/wheels``.
+
+As Maturin will compile a wheel for each interpreter it finds (e.g. the
+system Python and the interpreter from a Conda environment), there may be 
+multiple versions. You will have to install the version most relevant to 
+your version of Python (e.g. ``oxmol-0.1.0-cp36...`` for Python 3.6 and
+``oxmol-0.1.0-cp37...`` for Python 3.7). The full name of the file
+will vary depending on your platform.
+
+cd into ``./target/wheels`` and use pip to install the most relevant wheel
+
+.. code-block:: bash 
+
+    cd ./target/wheels
+    # Update the following command with the most relevant version.
+    pip install ./oxmol-0.1.0-cp37-cp37m-manylinux1_x86_64.whl
 
 You should now be ready to start using ``oxmol``. If you are interested in 
-compiling against additional versions of Python, the best place to start
-is the Maturin_ docs.
+compiling against a specific version of Python, you can specify the path
+to the interetreter using the ``-i`` flag for Maturin:
+
+.. code-block:: bash
+
+    maturin build -i $(which python3) --release
+
+For information about other flags, use the Maturin_ docs.
+
+Installing against PyPy
+-----------------------
+
+The latest version of PyPy changed the ABI string format and Maturin hasn't 
+yet been updated, so you may have to rename the wheel file.
+
+To compile oxmol against PyPy3, use the ``-i`` flag for Maturin:
+
+.. code-block:: bash
+
+    maturin build -i $(which pypy3) --release
+    cd target/wheels
+
+If you're using PyPy3 version >= 7.3.1 (where ``SYSTEM`` is e.g. ``linux_x86_64``):
+
+.. code-block:: bash 
+
+    mv oxmol-0.1.0-pp3pp73-pypy3_pp73-SYSTEM.whl oxmol-0.1.0-pp36-pypy36_pp73-SYSTEM.whl
+
+Install using PyPy's pip:
+
+.. code-block:: bash 
+
+    pypy3 -m pip install oxmol-0.1.0-pp36-pypy36_pp73-SYSTEM.whl
+
 
 .. _Maturin: https://github.com/PyO3/maturin
 .. _PyO3: https://pyo3.rs/
