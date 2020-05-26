@@ -32,49 +32,33 @@ welcome. Any bugs or significant frustrations can be reported in the
 issue tracker.
 
 .. code-block:: python
-    
-    from oxmol import Element, BondOrder, AtomSpec, BondSpec, Molecule
 
-    C = Element.from_symbol('C')
-    O = Element.from_symbol('O')
-    H = Element.from_symbol('H')
+    from oxmol import AtomSpec, BondSpec, Molecule
 
-    atoms = []
-    atoms.append(AtomSpec(C, 0))
-    atoms.append(AtomSpec(O, 0))
-    atoms.append(AtomSpec(H, 0))
-    atoms.append(AtomSpec(H, 0))
-    atoms.append(AtomSpec(H, 0))
-    atoms.append(AtomSpec(H, 0))
+    C, H, O = AtomSpec('C'), AtomSpec('H'), AtomSpec('O')
+    atoms = [C, O, H, H, H, H]
 
-    single_bond = BondOrder(1)
-
-    bonds = []
-    bonds.append(BondSpec(0, 1, single_bond))
-    bonds.append(BondSpec(1, 2, single_bond))
-    bonds.append(BondSpec(0, 3, single_bond))
-    bonds.append(BondSpec(0, 4, single_bond))
-    bonds.append(BondSpec(0, 5, single_bond))
+    bond_indices = [(0, 1), (1, 2), (0, 3), (0, 4), (0, 5)]
+    bonds = [BondSpec(sid, tid, 1) for (sid, tid) in bond_indices]
 
     mol = Molecule(atoms, bonds)
+    print(mol)
+    # PyMolecule with 6 atoms and 5 bonds.
 
     for (sid, tid) in mol.edges:
         print(mol.element(sid), mol.element(tid))
         print(mol.bond_order(sid, tid))
-    print(mol)
+    # PyElement::C Element::O
+    # PyBondOrder::Single
+    # PyElement::O Element::H
+    # PyBondOrder::Single
+    # PyElement::C Element::H
+    # PyBondOrder::Single
+    # PyElement::C Element::H
+    # PyBondOrder::Single
+    # PyElement::C Element::H
+    # PyBondOrder::Single
 
-    # Prints the following:
-    #   PyElement::C Element::O
-    #   PyBondOrder::Single
-    #   PyElement::O Element::H
-    #   PyBondOrder::Single
-    #   PyElement::C Element::H
-    #   PyBondOrder::Single
-    #   PyElement::C Element::H
-    #   PyBondOrder::Single
-    #   PyElement::C Element::H
-    #   PyBondOrder::Single
-    #   PyMolecule with 6 atoms and 5 bonds.
 
 .. toctree::
    :maxdepth: 3

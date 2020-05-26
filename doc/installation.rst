@@ -57,10 +57,7 @@ Clone the repo using git and move into the root folder:
     git clone https://github.com/thesketh/oxmol
     cd oxmol
 
-If your Python interpreter is already in a virtualenv or conda environment,
-enable your environment and run ``maturin develop --release``.
-
-Otherwise, execute the following commands from the root of the repo, where
+Execute the following commands from the root of the repo, where
 RELEVANT_VERSION is closest to your Python version:
 
 .. code-block:: bash
@@ -69,7 +66,9 @@ RELEVANT_VERSION is closest to your Python version:
     cd target/wheels
     pip install RELEVANT_VERSION
 
-You should now be ready to start using ``oxmol``.
+You should now be ready to start using ``oxmol``. If you are interested in 
+compiling against additional versions of Python, the best place to start
+is the Maturin_ docs.
 
 .. _Maturin: https://github.com/PyO3/maturin
 .. _PyO3: https://pyo3.rs/

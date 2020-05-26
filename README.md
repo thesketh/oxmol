@@ -20,35 +20,21 @@ These will be expanded upon in future versions.
 ## Example Usage
 
 ```python
-from oxmol import Element, BondOrder, AtomSpec, BondSpec, Molecule
+from oxmol import AtomSpec, BondSpec, Molecule
 
-C = Element.from_symbol('C')
-O = Element.from_symbol('O')
-H = Element.from_symbol('H')
+C, H, O = AtomSpec('C'), AtomSpec('H'), AtomSpec('O')
+atoms = [C, O, H, H, H, H]
 
-atoms = []
-atoms.append(AtomSpec(C, 0))
-atoms.append(AtomSpec(O, 0))
-atoms.append(AtomSpec(H, 0))
-atoms.append(AtomSpec(H, 0))
-atoms.append(AtomSpec(H, 0))
-atoms.append(AtomSpec(H, 0))
-
-single_bond = BondOrder(1)
-
-bonds = []
-bonds.append(BondSpec(0, 1, single_bond))
-bonds.append(BondSpec(1, 2, single_bond))
-bonds.append(BondSpec(0, 3, single_bond))
-bonds.append(BondSpec(0, 4, single_bond))
-bonds.append(BondSpec(0, 5, single_bond))
+bond_indices = [(0, 1), (1, 2), (0, 3), (0, 4), (0, 5)]
+bonds = [BondSpec(sid, tid, 1) for (sid, tid) in bond_indices]
 
 mol = Molecule(atoms, bonds)
+print(mol)
+# PyMolecule with 6 atoms and 5 bonds.
 
 for (sid, tid) in mol.edges:
     print(mol.element(sid), mol.element(tid))
     print(mol.bond_order(sid, tid))
-
 # PyElement::C Element::O
 # PyBondOrder::Single
 # PyElement::O Element::H
@@ -59,7 +45,4 @@ for (sid, tid) in mol.edges:
 # PyBondOrder::Single
 # PyElement::C Element::H
 # PyBondOrder::Single
-
-print(mol)
-# PyMolecule with 6 atoms and 5 bonds.
 ```
