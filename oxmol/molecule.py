@@ -92,12 +92,11 @@ class Molecule(PyDefaultMolecule):
 
     def degree(self, atom_id: int) -> int:
         """
-        Given an atom ID, return the number of connections the atom
-        has, including virtual hydrogens.
+        Given an atom ID, return the number of explicit connections
+        the atom has.
 
         :param atom_id: the atom index
-        :return: the number of connections (including virtual) that\
-        the atom has
+        :return: the number of connections that the atom has.
 
         """
         return self.super().degree(atom_id)
