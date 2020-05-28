@@ -10,11 +10,10 @@ PyO3 classes from Python, so this is all we are able to do on the Python
 end.
 
 """
-
 from typing import Type, TypeVar
 from .oxmol import PyElement
 
-E = TypeVar('E', bound='Element')
+El = TypeVar('El', bound='Element')
 
 
 class Element(PyElement):
@@ -24,11 +23,11 @@ class Element(PyElement):
     :param atomic_number: an ``int``, the atomic number.
 
     """
-    def __new__(cls: Type[E], atomic_number: int) -> E:
+    def __new__(cls: Type[El], atomic_number: int) -> El:
         return PyElement.__new__(cls, atomic_number)
 
     @classmethod
-    def from_symbol(cls: Type[E], symbol: str) -> PyElement:
+    def from_symbol(cls: Type[El], symbol: str) -> PyElement:
         """
         Create an element from its atomic symbol.
         """

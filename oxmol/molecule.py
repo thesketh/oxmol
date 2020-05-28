@@ -20,7 +20,7 @@ from .oxmol import (
     PyBondOrder,
 )
 
-M = TypeVar('M', bound='Molecule')
+Mol = TypeVar('Mol', bound='Molecule')
 
 
 class Molecule(PyDefaultMolecule):
@@ -32,17 +32,17 @@ class Molecule(PyDefaultMolecule):
     :param bonds: a ``list`` of ``PyBondSpec``
 
     Attributes
-    
+
     - ``nodes`` - a ``list`` of the atom indices
     - ``edges`` - a ``list`` of ``tuple`` of two atom indices,\
       representing the bonds
 
     """
     def __new__(
-            cls: Type[M],
+            cls: Type[Mol],
             atoms: List[PyAtomSpec],
             bonds: List[PyBondSpec]
-    ) -> M:
+    ) -> Mol:
         return PyDefaultMolecule.__new__(cls, atoms, bonds)
 
     def is_empty(self) -> bool:
