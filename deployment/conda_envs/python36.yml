@@ -2,6 +2,5 @@ name: python36
 channels:
   - conda-forge
 dependencies:
-  - pypy3
   - python==3.6
   - maturin

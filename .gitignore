@@ -1,3 +1,8 @@
+# conda environments
+deployment/conda/
+deployment/conda_envs/Miniconda*
+deployment/install_rust/rustup-init*
+
 /target
 Cargo.lock
 

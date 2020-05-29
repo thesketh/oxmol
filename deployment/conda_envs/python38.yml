@@ -2,5 +2,6 @@ name: python38
 channels:
   - conda-forge
 dependencies:
+  - pypy36
   - python==3.8
   - maturin
