@@ -1,14 +1,42 @@
 Installation
 ============
 
-``oxmol`` is currently not listed in any package repos while deployment is 
-worked out, but installation from source is fairly easy. Installation has 
-only been tested on Linux (Ubuntu 18.04) and with Python 3.7, but should
-be possible for any system compatible with PyO3_. This includes Windows,
-macOS, Linux and BSD systems and both the Python and PyPy interpreters.
+Binary Releases
+---------------
+
+``oxmol`` is currently available on test PyPI whilst development is
+likely to be erratic and API-breaking. Wheels have been compiled for the
+following versions of Python:
+
+- Python 3.6
+- Python 3.7
+- Python 3.8
+- PyPy 7.3 (implementing Python 3.6)
+
+These have been compiled against Linux, macOS and Windows, and are not
+guaranteed to be bug free. These can be installed using the following command 
+(with some exceptions for PyPy below):
+
+.. code-block:: bash
+
+    pip install --index-url https://test.pypi.org/simple/ oxmol
+
+PyPy wheels for Linux currently aren't compatible with the ``manylinux`` tag, 
+so these will have to be downloaded from the github releases and installed:
+
+.. code-block:: bash
+
+    RELEASE="oxmol-0.1.0-pp36-pypy36_pp73-linux_x86_64.whl"
+    curl "https://github.com/thesketh/oxmol/releases/download/v0.1.0/${RELEASE}" --output "${RELEASE}"
+    pip install "${RELEASE}"
+
+PyPy doesn't currently support 64-bit Windows, so no Windows PyPy wheels are provided.
+
+Compiling From Source 
+---------------------
 
 Toolchain
----------
+^^^^^^^^^
 The easiest way to build the Python wheels is to use Maturin_, which can be
 installed via pip.
 
@@ -43,13 +71,13 @@ with the following contents in order to set the linker options:
     ]
 
 Dependencies
-------------
+^^^^^^^^^^^^
 The Rust component of ``oxmol`` depends upon ``pyo3``, ``molecule`` and 
 ``gamma`` (a graph library) but these should be automatically fetched by Cargo 
 when compiling so there are no dependencies to install manually.
 
-Installation Steps
-------------------
+Compiling Against Python
+^^^^^^^^^^^^^^^^^^^^^^^^
 Clone the repo using git and move into the root folder:
 
 .. code-block:: bash
@@ -92,8 +120,10 @@ to the interetreter using the ``-i`` flag for Maturin:
 
 For information about other flags, use the Maturin_ docs.
 
-Installing against PyPy
------------------------
+Compiling Against PyPy
+^^^^^^^^^^^^^^^^^^^^^^
+
+This is mostly the same as the process for Python.
 
 The latest version of PyPy changed the ABI string format and Maturin hasn't 
 yet been updated, so you may have to rename the wheel file.
@@ -118,7 +148,18 @@ Install using PyPy's pip:
     pypy3 -m pip install oxmol-0.1.0-pp36-pypy36_pp73-SYSTEM.whl
 
 
+Testing
+-------
+
+To run the tests, use ``pytest``:
+
+.. code-block:: bash
+
+    pip install pytest
+    pytest --pyargs oxmol
+
+If these pass, all is well! If not, please post an issue on GitHub.
+
 .. _Maturin: https://github.com/PyO3/maturin
-.. _PyO3: https://pyo3.rs/
 __ https://doc.rust-lang.org/1.2.0/book/nightly-rust.html
 __ https://www.rust-lang.org/learn/get-started
