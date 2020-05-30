@@ -13,9 +13,9 @@ This package is currently a work in progress, it is missing some of the followin
 
 These will be expanded upon in future versions.
 
-## Building
+## Installation
 
-[The installation instructions can be found in the docs](https://oxmol.readthedocs.io/en/latest/installation.html)
+[The installation instructions can be found in the docs](https://oxmol.readthedocs.io/en/latest/installation.html). These cover installation of binaries and building from source.
 
 ## Example Usage
 
