@@ -3,8 +3,8 @@ use std::convert::TryFrom;
 use pyo3::prelude::*;
 use pyo3::class::PyObjectProtocol;
 
-use molecule::default_molecule::DefaultMolecule;
-use molecule::molecule::Molecule;
+use chemcore::molecule::DefaultMolecule;
+use chemcore::molecule::Molecule;
 
 use gamma::graph::Graph;
 use crate::exceptions::*;
@@ -30,18 +30,18 @@ impl PyDefaultMolecule {
         let mut bonds = Vec::new();
 
         for py_atom in py_atoms {
-            let atom: molecule::spec::Atom = py_atom.into();
+            let atom: chemcore::molecule::spec::Atom = py_atom.into();
             atoms.push(atom);
         }
 
         for py_bond in py_bonds {
-            let bond: molecule::spec::Bond = py_bond.into();
+            let bond: chemcore::molecule::spec::Bond = py_bond.into();
             bonds.push(bond);
         }
 
         let nodes = (0..atoms.len()).collect();
 
-        let molecule = molecule::spec::Molecule{atoms, bonds};
+        let molecule = chemcore::molecule::spec::Molecule{atoms, bonds};
         let default_molecule = match DefaultMolecule::build(molecule) {
             Ok(molecule) => molecule,
             Err(error_type) => return Err(exception_from_error(error_type))

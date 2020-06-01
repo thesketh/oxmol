@@ -12,14 +12,14 @@ oxmol Documentation
     :target: https://oxmol.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-``oxmol`` is a Python wrapper, written using PyO3_, for the `minimal molecule`__
-implemented in Rust by Rich Apodaca. This follows the 'minimal molecule API' 
+``oxmol`` is a Python wrapper, written using PyO3_, for `ChemCore, a cheminformatics
+library implemented in Rust by Rich Apodaca`__. This follows the 'minimal molecule API' 
 `outlined by Apodaca in a blog post`__.
 
 This package is currently a work in progress, it is missing some of the following 
 key pieces:
 
-- A SMILES parser/writer (`this is being worked on`__)
+- A fully-featured SMILES parser (`this is being worked on, but isn't yet in oxmol`__)
 - Substructure matching
 - Coordinate representations and embedding
 - Descriptor generation
@@ -70,7 +70,7 @@ issue tracker.
 
 
 .. _PyO3: https://pyo3.rs
-__ https://github.com/rapodaca/molecule.rs
+__ https://github.com/rapodaca/chemcore
 __ https://depth-first.com/articles/2020/04/06/a-minimal-molecule-api/
 __ https://depth-first.com/articles/2020/05/25/lets-build-a-smiles-parser-in-rust/
 __ https://github.com/thesketh/oxmol

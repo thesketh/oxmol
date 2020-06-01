@@ -2,7 +2,7 @@ use std::convert::TryFrom;
 
 use crate::exceptions::{get_ValueError,get_NotImplementedError};
 
-use molecule::element::Element;
+use chemcore::molecule::Element;
 use pyo3::class::{PyObjectProtocol, basic::CompareOp};
 use pyo3::types::PyType;
 use pyo3::prelude::*;

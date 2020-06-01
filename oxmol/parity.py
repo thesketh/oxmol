@@ -25,10 +25,12 @@ class Parity(PyParity):
     using Python's ``True`` and ``False`` respectively.
 
     For tetrahedral chirality:
+
     - ``True`` represents clockwise
     - ``False`` represents anticlockwise
 
     For E/Z double bond stereochemistry:
+    
     - ``True`` represents syn
     - ``False`` represents anti
 

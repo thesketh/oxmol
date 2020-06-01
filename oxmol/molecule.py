@@ -26,7 +26,7 @@ Mol = TypeVar('Mol', bound='Molecule')
 class Molecule(PyDefaultMolecule):
     """
     A molecular representation. This class is ultimately a
-    representation of ``molecule::default_molecule::DefaultMolecule``.
+    representation of ``chemcore::molecule::DefaultMolecule``.
 
     :param atoms: a ``list`` of ``PyAtomSpec``
     :param bonds: a ``list`` of ``PyBondSpec``

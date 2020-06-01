@@ -3,7 +3,7 @@ use std::convert::TryFrom;
 use pyo3::class::{PyObjectProtocol, basic::CompareOp};
 use pyo3::prelude::*;
 
-use molecule::bond_order::BondOrder;
+use chemcore::molecule::BondOrder;
 
 use crate::exceptions::{get_ValueError, get_NotImplementedError};
 

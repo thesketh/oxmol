@@ -18,7 +18,8 @@ El = TypeVar('El', bound='Element')
 
 class Element(PyElement):
     """
-    A chemical element. Represented in ``molecule.rs`` as a Rust enum.
+    A chemical element. Represented in ``chemcore::molecule`` as a Rust
+    enum.
 
     :param atomic_number: an ``int``, the atomic number.
 

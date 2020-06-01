@@ -9,7 +9,7 @@ name = "oxmol"
 crate-type = ["cdylib"]
 
 [dependencies]
-molecule = {git = "https://github.com/rapodaca/molecule.rs"}
+chemcore = {git = "https://github.com/rapodaca/chemcore"}
 gamma = "0.1.1"
 
     [dependencies.pyo3]

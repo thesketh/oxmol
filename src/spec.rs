@@ -1,7 +1,7 @@
 use pyo3::class::PyObjectProtocol;
 use pyo3::prelude::*;
 
-use molecule::spec::{Atom,Bond};
+use chemcore::molecule::spec::{Atom,Bond};
 
 use crate::exceptions::get_ValueError;
 use crate::element::PyElement;

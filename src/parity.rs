@@ -1,6 +1,6 @@
 use crate::exceptions::get_NotImplementedError;
 
-use molecule::parity::Parity;
+use chemcore::molecule::Parity;
 use pyo3::class::{PyObjectProtocol, basic::CompareOp};
 use pyo3::prelude::*;
 

@@ -19,7 +19,7 @@ BO = TypeVar('BO', bound='BondOrder')
 class BondOrder(PyBondOrder):
     """
     A bond order. This is a Python class representing a Rust enum. The bond
-    orders represented in ``molecule.rs`` are ``Zero``, ``Single``,
+    orders represented in ``chemcore::molecule`` are ``Zero``, ``Single``,
     ``Double`` and ``Triple``.
 
     :param order: an int in range(0, 4) representing the bond order as\

@@ -1,6 +1,6 @@
 use pyo3::exceptions;
 use pyo3::PyErr;
-use molecule::error::Error;
+use chemcore::molecule::Error;
 use gamma::graph::Error as GraphError;
 
 #[allow(non_snake_case)]
